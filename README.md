@@ -106,23 +106,24 @@ server {
 到 https://login.tailscale.com/admin/acls/file 添加你的 Derp 服务器，同样给出我的参考配置：
 
 ```
-"derpMap": {
+	"derpMap": {
+		//"OmitDefaultRegions": true,
+		//上面开启好像是只允许自定义Derp服务器
 		"Regions": {
-			"901": {
-				"RegionID":   901,
-				"RegionCode": "myderp",
-				"RegionName": "myderp",
+			"900": {
+				"RegionID":   900,
+				"RegionCode": "myderpserver",
 				"Nodes": [
 					{
-						"Name":     "901a",
-						"RegionID": 901,
-						"DERPPort": 442,
-						"HostName": "derp.xxxx.xx",
+						"Name":     "1",
+						"RegionID": 900,
+						"DERPPort": 443,
+						"HostName": "derp.example.com",
 					},
 				],
 			},
 		},
-	}
+	},
 ```
 这里就结束了，最后使用 tailscale 命令行通过 `tailscale ping` 和 `tailscale status` 检查验证一下。
 # 致谢
