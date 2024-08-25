@@ -1,28 +1,27 @@
-version: '3'
+version: '3'  # 使用 Docker Compose 文件格式版本 3
 
 services:
-   tailscale-derp:
-       container_name: tailscale-derp
-       image: derpinchina:latest
-       hostname: ${TAILSCALE_DERP_HOSTNAME}
-       volumes:
-         - /lib/modules:/lib/modules:ro
-         - $PWD/config:/var/lib/tailscale
-       cap_add:
-         - NET_ADMIN
-         - NET_RAW
-       environment:
-         - TAILSCALE_DERP_HOSTNAME=${TAILSCALE_DERP_HOSTNAME}
-         - TAILSCALE_DERP_ADDR=${TAILSCALE_DERP_ADDR}
-         - TAILSCALE_DERP_VERIFY_CLIENTS=${TAILSCALE_DERP_VERIFY_CLIENTS}
-         - TAILSCALE_DERP_STUN_PORT=${TAILSCALE_DERP_STUN_PORT}
-         - TAILSCALE_AUTH_KEY=${TAILSCALE_AUTH_KEY}
-       ports:
-         - 127.0.0.1:444:444/tcp
-         - 3478:3478/udp
-         #Uncomment only if you aren't running tailscaled on the host system otherwise it will error
-         #- 41641:41641/udp
-       restart: unless-stopped
-       devices:
-         - /dev/net/tun:/dev/net/tun
-
+   tailscale-derp:  # 定义一个名为 "tailscale-derp" 的服务
+       container_name: tailscale-derp  # 指定容器名称为 "tailscale-derp"
+       image: derpinchina:latest  # 使用 "derpinchina:latest" 镜像
+       hostname: ${TAILSCALE_DERP_HOSTNAME}  # 设置容器的主机名为环境变量 `TAILSCALE_DERP_HOSTNAME`
+       volumes:  # 挂载主机目录到容器中
+         - /lib/modules:/lib/modules:ro  # 只读方式挂载主机的 `/lib/modules` 目录
+         - $PWD/config:/var/lib/tailscale  # 挂载当前目录下的 `config` 目录到容器的 `/var/lib/tailscale`
+       cap_add:  # 为容器添加特定的 Linux 功能权限
+         - NET_ADMIN  # 添加 NET_ADMIN 权限，允许管理网络
+         - NET_RAW  # 添加 NET_RAW 权限，允许直接访问网络设备
+       environment:  # 设置环境变量
+         - TAILSCALE_DERP_HOSTNAME=${TAILSCALE_DERP_HOSTNAME}  # 设置 DERP 主机名
+         - TAILSCALE_DERP_ADDR=${TAILSCALE_DERP_ADDR}  # 设置 DERP 监听地址
+         - TAILSCALE_DERP_VERIFY_CLIENTS=${TAILSCALE_DERP_VERIFY_CLIENTS}  # 是否验证客户端
+         - TAILSCALE_DERP_STUN_PORT=${TAILSCALE_DERP_STUN_PORT}  # 设置 STUN 端口
+         - TAILSCALE_AUTH_KEY=${TAILSCALE_AUTH_KEY}  # 设置 Tailscale 的认证密钥
+       ports:  # 映射主机端口到容器端口
+         - 127.0.0.1:444:444/tcp  # 将主机的 127.0.0.1:444 映射到容器的 444 端口（TCP）
+         - 3478:3478/udp  # 将主机的 3478 端口映射到容器的 3478 端口（UDP）
+         # 如果你不在主机系统上运行 tailscaled，可以取消注释以下行，否则会报错
+         #- 41641:41641/udp  # 将主机的 41641 端口映射到容器的 41641 端口（UDP）
+       restart: unless-stopped  # 设置容器自动重启策略，除非手动停止，否则总是重启
+       devices:  # 设备映射
+         - /dev/net/tun:/dev/net/tun  # 映射 TUN 设备，使容器能够创建虚拟网络接口
