@@ -8,7 +8,7 @@
 ## 构建镜像
 太懒了，没有把镜像打包上传，有需要的话自己构建一下：
 ```
-git clone https://github.com/S4kur4/Derp-China.git && cd Derp-China && docker build . -t derpinchina:latest
+git clone https://github.com/lansepeach/Derp-China-new.git && cd Derp-China-new && docker build . -t derpinchina:latest
 ```
 第一次速度应该不会很快，但也不至于太慢，可以等会儿，先做下一步。
 ## 创建 tailscale 一次性认证 key
