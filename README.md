@@ -12,7 +12,7 @@
 ```
 git clone https://github.com/lansepeach/Derp-China-new.git && cd Derp-China-new && docker build . -t derpinchina:latest
 ```
-第一次速度应该不会很快，但也不至于太慢，可以等会儿，先做下一步。
+第一次速度应该不会很快，但也不至于太慢，可以等会儿，先做下一步。（太慢可以考虑切换docker的镜像加速，自行查阅相关资料）
 ## 创建 tailscale 一次性认证 key
 这个 key 是用来通过命令行将容器连接到你的 tailscale 里去的，前往 https://login.tailscale.com/admin/settings/keys 点击 "Generate auth key..." 创建一下，然后把 key 记录下来。
 
